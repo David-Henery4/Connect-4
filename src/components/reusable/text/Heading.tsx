@@ -6,7 +6,7 @@ interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   variant: "large" | "medium" | "small" | "xsmall";
 }
 
-const Heading = ({ children, className, variant, ...props }: HeadingProps) => {
+const Heading = ({ className, variant, ...props }: HeadingProps) => {
   if (variant === "large") {
     return (
       <h1 className={cn(headingVariants({ variant }), className)} {...props}/>

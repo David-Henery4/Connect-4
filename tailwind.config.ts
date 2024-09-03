@@ -7,6 +7,9 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      "smTablet": "32.5em", // 520px
+    },
     fontFamily: {
       spaceG: ["var(--font-space-g)", "sans-serif"],
     },

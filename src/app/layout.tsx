@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${spaceGFont.variable}`}>
-      <body className="bg-secondary text-black font-spaceG">{children}</body>
+      <body className="text-black font-spaceG">{children}</body>
     </html>
   );
 }

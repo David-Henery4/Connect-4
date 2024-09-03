@@ -1,8 +1,13 @@
 import { PropsWithChildren } from "react";
 
-const BaseText = ({children}: PropsWithChildren) => {
+interface Props extends PropsWithChildren { 
+  className?: string
+}
+
+const BaseText = ({children, className}: Props) => {
+  console.log(className)
   return (
-    <p className="text-base text-black/60 leading-[21px] font-medium">{children}</p>
+    <p className={`text-base text-black/60 leading-[21px] font-medium ${className}`}>{children}</p>
   )
 }
 
