@@ -3,10 +3,10 @@ import { Heading } from "@/components/reusable/text";
 import { PlayerVsPlayerIcon } from "../../../../public/assets/images";
 import Link from "next/link";
 
-const MainMenuBtns = () => {
+const MainMenuBtns = ({setGameStarted}: {setGameStarted: (gameStarted: boolean) => void}) => {
   return (
     <div className="flex flex-col gap-4 w-full">
-      <Button variant="primary">
+      <Button variant="primary" onClick={() => setGameStarted(true)}>
         <Heading variant="medium" className="flex-1">
           PLAY VS PLAYER
         </Heading>
