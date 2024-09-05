@@ -2,7 +2,7 @@
 
 const GameGrid = () => {
   return (
-    <div>GameGrid</div>
+    <div className="col-start-1 col-end-3">GameGrid</div>
   )
 }
 

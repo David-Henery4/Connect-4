@@ -2,7 +2,7 @@
 
 const Timer = () => {
   return (
-    <div>Timer</div>
+    <div className="col-start-1 col-end-3">Timer</div>
   )
 }
 

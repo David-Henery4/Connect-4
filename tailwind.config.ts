@@ -8,15 +8,16 @@ const config: Config = {
   ],
   theme: {
     screens: {
+      mobile: "23.4375em", // 375px
       smTablet: "32.5em", // 520px
+      tablet: "48em", // 768px
+      desktop: "64em", // 1024px
     },
     fontFamily: {
       spaceG: ["var(--font-space-g)", "sans-serif"],
     },
     gridTemplateColumns: {
-      scoreCardMobileRightToLeft: "27px 27px 1fr",
-      scoreCardMobileLeftToRight: "1fr 27px 27px",
-      // scoreCardDesktop: "1fr 1fr 1fr",
+      navbar: "auto 1fr auto",
     },
     colors: {
       black: "#000000",
