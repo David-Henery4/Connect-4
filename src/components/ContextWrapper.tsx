@@ -8,7 +8,7 @@ const ContextWrapper = () => {
   //
   return (
     <main
-      className={`relative w-full px-5 grid place-items-center min-h-[100svh] ${
+      className={`relative w-full px-5 pt-14 pb-24 grid place-items-center min-h-[100svh] ${
         gameStarted ? "bg-secondary" : "bg-secondary smTablet:bg-primary"
       }`}
     >

@@ -1,4 +1,4 @@
-import { GameGrid, Navbar, Scores, Timer } from "./game-parts"
+import { GameGrid, Navbar, Scores } from "./game-parts"
 
 const GameSection = () => {
   return (
@@ -6,7 +6,6 @@ const GameSection = () => {
       <Navbar />
       <Scores />
       <GameGrid />
-      <Timer />
     </section>
   )
 }
