@@ -2,8 +2,10 @@ import Button from "@/components/reusable/Button";
 import { Heading } from "@/components/reusable/text";
 import { PlayerVsPlayerIcon } from "../../../../public/assets/images";
 import Link from "next/link";
+import useGlobalHook from "@/context/useGlobalHook";
 
-const MainMenuBtns = ({setGameStarted}: {setGameStarted: (gameStarted: boolean) => void}) => {
+const MainMenuBtns = () => {
+  const { setGameStarted } = useGlobalHook();
   return (
     <div className="flex flex-col gap-4 w-full">
       <Button variant="primary" onClick={() => setGameStarted(true)}>

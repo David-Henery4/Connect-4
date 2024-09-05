@@ -7,8 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = ({ variant, className, ...props }: ButtonProps) => {
-  console.log("CN", cn(className));
-  console.log("VARIANT", buttonVariants({ variant }));
+  //
   return (
     <button className={cn(buttonVariants({ variant }), className)} {...props} />
   );
