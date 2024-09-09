@@ -20,6 +20,10 @@ const config: Config = {
     gridTemplateColumns: {
       navbar: "auto 1fr auto",
       mainGameGrid: "141px 60px 1fr 60px 141px",
+      mainGameCounterGrid: "repeat(7, 1fr)",
+    },
+    gridTemplateRows: {
+      mainGameCounterGrid: "repeat(6, 1fr)",
     },
     colors: {
       black: "#000000",

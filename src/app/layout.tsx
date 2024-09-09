@@ -14,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${spaceGFont.variable}`}>
-      <body className="text-black font-spaceG">{children}</body>
+      <body className="text-black font-spaceG has-[dialog[open]]:overflow-hidden">
+        {children}
+      </body>
     </html>
   );
 }
