@@ -16,7 +16,7 @@ const GameGrid = () => {
         onClick={() => console.log("clicked: beyond container")}
       >
         <div
-          className="w-full h-full absolute top-0 left-0 grid grid-cols-mainGameCounterGrid grid-rows-mainGameCounterGrid gap-4 z-10 pt-4 px-4 pb-[67px]"
+          className="w-full h-full absolute top-0 left-0 grid grid-cols-mainGameCounterGrid grid-rows-mainGameCounterGrid gap-x-4 z-10 pt-[2%] px-[2.7%] pb-[8.5%]"
           onClick={() => console.log("clicked: container")}
         >
           {counterData.colA.map((counter) => {

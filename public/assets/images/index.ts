@@ -19,6 +19,7 @@ import TurnBackgroundRedIcon from "./turn-background-red.svg";
 import TurnBackgroundYellowIcon from "./turn-background-yellow.svg";
 import YouIcon from "./you.svg";
 import MarkerRedBgIcon from "./marker-red-bg.svg";
+import MarkerYellowBgIcon from "./marker-yellow-bg.svg";
 
 export {
   BoardLayerBlackLargeIcon,
@@ -42,4 +43,5 @@ export {
   TurnBackgroundYellowIcon,
   YouIcon,
   MarkerRedBgIcon,
+  MarkerYellowBgIcon,
 };

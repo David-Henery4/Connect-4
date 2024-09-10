@@ -6,15 +6,16 @@ import { useRef } from "react";
 
 const Navbar = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const { setGamePaused } = useGlobalHook();
 
   const handlePauseMenuOpen = () => {
-    console.log("clicked")
-    console.log(dialogRef.current)
     dialogRef.current?.showModal();
+    setGamePaused(true);
   }
 
   const handlePauseMenuClose = () => {
     dialogRef.current?.close();
+    setGamePaused(false);
   }
 
   return (

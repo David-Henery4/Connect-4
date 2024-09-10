@@ -4,7 +4,7 @@ import GameSection from "@/components/game/GameSection";
 import useGlobalHook from "@/context/useGlobalHook";
 
 const ContextWrapper = () => {
-  const { gameStarted } = useGlobalHook();
+  const { gameStarted, roundWinner, hasRoundStarted } = useGlobalHook();
   //
   return (
     <main
@@ -14,7 +14,7 @@ const ContextWrapper = () => {
     >
       {!gameStarted ? <MainMenuCard /> : <GameSection />}
       {gameStarted && (
-        <div className="absolute bottom-0 left-0 w-full h-[200px] rounded-t-[60px] bg-primary"></div>
+        <div className={`absolute bottom-0 left-0 w-full h-[200px] rounded-t-[60px] bg-primary`}></div>
       )}
     </main>
   );

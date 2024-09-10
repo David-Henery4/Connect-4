@@ -1,8 +1,10 @@
 import ScoreCard from "./score-card/ScoreCard";
 import { PlayerOneIcon, PlayerTwoIcon } from "../../../../public/assets/images";
 import { Heading } from "@/components/reusable/text";
+import useGlobalHook from "@/context/useGlobalHook";
 
 const Scores = () => {
+  const { playerInfo } = useGlobalHook();
   return (
     <>
       <ScoreCard className="w-full flex flex-col mobile:flex-row desktop:col-start-1 desktop:col-end-2 desktop:row-start-2 desktop:row-end-4 desktop:self-center desktop:flex-col desktop:mb-[150px]">
@@ -13,7 +15,7 @@ const Scores = () => {
           <Heading variant="xsmall" className="uppercase">
             Player 1
           </Heading>
-          <p className="text-[32px] font-bold">12</p>
+          <p className="text-[32px] font-bold">{playerInfo.player1.score}</p>
         </div>
       </ScoreCard>
       <ScoreCard className="w-full flex flex-col mobile:flex-row-reverse desktop:col-start-5 desktop:col-end-6 desktop:row-start-2 desktop:row-end-4 desktop:self-center desktop:flex-col desktop:mb-[150px]">
@@ -24,7 +26,7 @@ const Scores = () => {
           <Heading variant="xsmall" className="uppercase">
             Player 2
           </Heading>
-          <p className="text-[32px] font-bold">23</p>
+          <p className="text-[32px] font-bold">{playerInfo.player2.score}</p>
         </div>
       </ScoreCard>
     </>

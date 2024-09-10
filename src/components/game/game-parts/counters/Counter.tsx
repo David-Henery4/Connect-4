@@ -1,23 +1,38 @@
-import {CounterRedLargeIcon, CounterRedSmallIcon} from "../../../../../public/assets/images"
-import { useState } from "react"
-import useGlobalHook from "@/context/useGlobalHook"
+import {
+  CounterRedLargeIcon,
+  CounterRedSmallIcon,
+  CounterYellowLargeIcon,
+} from "../../../../../public/assets/images";
+import { useState } from "react";
+import useGlobalHook from "@/context/useGlobalHook";
 
 const Counter = () => {
-  const {currentPlayer} = useGlobalHook()
-  const [isClicked, setIsClicked] = useState(false)
+  const { currentPlayer } = useGlobalHook();
+  const [isClicked, setIsClicked] = useState(false);
+  const [counterOwnerId, setCounterOwnerId] = useState<number | null>(null);
   //
   return (
-    <div className="w-full h-full relative" onClick={() => {
-      setIsClicked(true)
-      console.log("clicked: counter");
-      }}>
+    <div
+      className="w-full h-full relative"
+      onClick={() => {
+        if (!isClicked) {
+          setCounterOwnerId(currentPlayer.playerId);
+        }
+        setIsClicked(true);
+        console.log("clicked: counter");
+      }}
+    >
       {isClicked && (
         <>
-        {currentPlayer.playerId === 1 ? <CounterRedLargeIcon /> : <CounterRedSmallIcon />}
+          {counterOwnerId === 1 ? (
+            <CounterRedLargeIcon className="w-full h-full" />
+          ) : (
+            <CounterYellowLargeIcon className="w-full h-full" />
+          )}
         </>
-        )}
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Counter
+export default Counter;
