@@ -6,7 +6,7 @@ import {
 import { useState } from "react";
 import useGlobalHook from "@/context/useGlobalHook";
 
-const Counter = () => {
+const Counter = ({ counterCol }: {counterCol: string}) => {
   const { currentPlayer } = useGlobalHook();
   const [isClicked, setIsClicked] = useState(false);
   const [counterOwnerId, setCounterOwnerId] = useState<number | null>(null);
@@ -19,7 +19,7 @@ const Counter = () => {
           setCounterOwnerId(currentPlayer.playerId);
         }
         setIsClicked(true);
-        console.log("clicked: counter");
+        console.log("counter row: ", counterCol);
       }}
     >
       {isClicked && (
