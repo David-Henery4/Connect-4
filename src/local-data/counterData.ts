@@ -32,192 +32,192 @@ const colA = [
 ];
 const colB = [
   {
-    id: 1,
+    id: 7,
     col: "B",
     row: 1,
   },
   {
-    id: 2,
+    id: 8,
     col: "B",
     row: 2,
   },
   {
-    id: 3,
+    id: 9,
     col: "B",
     row: 3,
   },
   {
-    id: 4,
+    id: 10,
     col: "B",
     row: 4,
   },
   {
-    id: 5,
+    id: 11,
     col: "B",
     row: 5,
   },
   {
-    id: 6,
+    id: 12,
     col: "B",
     row: 6,
   },
 ];
 const colC = [
   {
-    id: 1,
+    id: 13,
     col: "C",
     row: 1,
   },
   {
-    id: 2,
+    id: 14,
     col: "C",
     row: 2,
   },
   {
-    id: 3,
+    id: 15,
     col: "C",
     row: 3,
   },
   {
-    id: 4,
+    id: 16,
     col: "C",
     row: 4,
   },
   {
-    id: 5,
+    id: 17,
     col: "C",
     row: 5,
   },
   {
-    id: 6,
+    id: 18,
     col: "C",
     row: 6,
   },
 ];
 const colD = [
   {
-    id: 1,
+    id: 19,
     col: "D",
     row: 1,
   },
   {
-    id: 2,
+    id: 20,
     col: "D",
     row: 2,
   },
   {
-    id: 3,
+    id: 21,
     col: "D",
     row: 3,
   },
   {
-    id: 4,
+    id: 22,
     col: "D",
     row: 4,
   },
   {
-    id: 5,
+    id: 23,
     col: "D",
     row: 5,
   },
   {
-    id: 6,
+    id: 24,
     col: "D",
     row: 6,
   },
 ];
 const colE = [
   {
-    id: 1,
+    id: 25,
     col: "E",
     row: 1,
   },
   {
-    id: 2,
+    id: 26,
     col: "E",
     row: 2,
   },
   {
-    id: 3,
+    id: 27,
     col: "E",
     row: 3,
   },
   {
-    id: 4,
+    id: 28,
     col: "E",
     row: 4,
   },
   {
-    id: 5,
+    id: 29,
     col: "E",
     row: 5,
   },
   {
-    id: 6,
+    id: 30,
     col: "E",
     row: 6,
   },
 ];
 const colF = [
   {
-    id: 1,
+    id: 31,
     col: "F",
     row: 1,
   },
   {
-    id: 2,
+    id: 32,
     col: "F",
     row: 2,
   },
   {
-    id: 3,
+    id: 33,
     col: "F",
     row: 3,
   },
   {
-    id: 4,
+    id: 34,
     col: "F",
     row: 4,
   },
   {
-    id: 5,
+    id: 35,
     col: "F",
     row: 5,
   },
   {
-    id: 6,
+    id: 36,
     col: "F",
     row: 6,
   },
 ];
 const colG = [
   {
-    id: 1,
+    id: 37,
     col: "G",
     row: 1,
   },
   {
-    id: 2,
+    id: 38,
     col: "G",
     row: 2,
   },
   {
-    id: 3,
+    id: 39,
     col: "G",
     row: 3,
   },
   {
-    id: 4,
+    id: 40,
     col: "G",
     row: 4,
   },
   {
-    id: 5,
+    id: 41,
     col: "G",
     row: 5,
   },
   {
-    id: 6,
+    id: 42,
     col: "G",
     row: 6,
   },
