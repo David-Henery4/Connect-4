@@ -14,7 +14,13 @@ const ContextWrapper = () => {
     >
       {!gameStarted ? <MainMenuCard /> : <GameSection />}
       {gameStarted && (
-        <div className={`absolute bottom-0 left-0 w-full h-[200px] rounded-t-[60px] bg-primary`}></div>
+        <div
+          className={`absolute bottom-0 left-0 w-full h-[200px] rounded-t-[60px] ${
+            !hasRoundStarted && roundWinner?.playerId === 1
+              ? "bg-pink"
+              : !hasRoundStarted && roundWinner?.playerId === 2 ? "bg-yellow" : "bg-primary"
+          }`}
+        ></div>
       )}
     </main>
   );

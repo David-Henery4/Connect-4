@@ -6,7 +6,7 @@ import { useRef } from "react";
 
 const Navbar = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const { setGamePaused } = useGlobalHook();
+  const { setGamePaused, handleGameRestart } = useGlobalHook();
 
   const handlePauseMenuOpen = () => {
     dialogRef.current?.showModal();
@@ -25,7 +25,7 @@ const Navbar = () => {
       <div className="row-start-1 row-end-2 flex justify-center items-center  mobile:row-auto">
         <LogoIcon />
       </div>
-      <Navbtn btnType="restart" />
+      <Navbtn btnType="restart" onClick={handleGameRestart} />
     </nav>
   );
 };

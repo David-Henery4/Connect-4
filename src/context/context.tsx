@@ -61,6 +61,7 @@ interface GlobalContextType {
     score: number;
   } | null;
   handlePlayAgain: () => void;
+  handleGameRestart: () => void;
 }
 
 const AppContext = createContext<GlobalContextType | undefined>(undefined);
@@ -138,8 +139,15 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   //
   const handleGameRestart = () => {
     setHasRoundStarted(true);
+    //
+    handleRoundReset()
+  };
+  //
+  const handleRoundReset = () => {
     setGamePaused(false);
     setGameTimer(30);
+    setNumberOfRounds(0);
+    setRoundWinner(null);
     setPlayerInfo({
       player1: {
         playerId: 1,
@@ -152,15 +160,18 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         score: 0,
       },
     });
-    //
-    setNumberOfRounds(0); // might have to depend on if going back to main menu or just restarting the game
+    setCurrentPlayer({
+      playerId: 1,
+      isCurrentTurn: true,
+      score: 0,
+    });
   };
   //
   const handleQuit = () => {
     setGameStarted(false);
     setHasRoundStarted(false);
-    setGamePaused(false);
-    setGameTimer(30);
+    //
+    handleRoundReset()
   };
   //
   const timedOutRound = () => {
@@ -170,14 +181,14 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       setRoundWinner({
         playerId: 2,
         isCurrentTurn: false,
-        score: playerInfo.player2.score,
+        score: playerInfo.player2.score + 1,
       });
     } else {
       handleScoreUpdate("player1");
       setRoundWinner({
         playerId: 1,
         isCurrentTurn: false,
-        score: playerInfo.player1.score,
+        score: playerInfo.player1.score + 1,
       });
     }
   };
@@ -200,6 +211,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setHasRoundStarted(true);
     handleTurnSwitch();
     setGameTimer(30);
+    setRoundWinner(null);
   };
   //
   useEffect(() => {
@@ -242,7 +254,8 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         setHasRoundStarted,
         hasRoundStarted,
         roundWinner,
-        handlePlayAgain
+        handlePlayAgain,
+        handleGameRestart,
       }}
     >
       {children}

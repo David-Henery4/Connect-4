@@ -4,7 +4,7 @@ import Button from "../reusable/Button";
 import useGlobalHook from "@/context/useGlobalHook";
 
 const PauseMenu = forwardRef<HTMLDialogElement, {pauseClose: () => void}>((props, ref) => {
-  const { handleQuit } = useGlobalHook();
+  const { handleQuit, handleGameRestart } = useGlobalHook();
   //
   return (
     <dialog ref={ref} className="w-full bg-black/0 backdrop:bg-black/50">
@@ -23,6 +23,10 @@ const PauseMenu = forwardRef<HTMLDialogElement, {pauseClose: () => void}>((props
           <Button
             variant="secondary"
             className="w-full justify-center uppercase"
+            onClick={() => {
+              props.pauseClose();
+              handleGameRestart();
+            }}
           >
             Restart
           </Button>
