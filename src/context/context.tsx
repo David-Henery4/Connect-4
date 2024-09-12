@@ -7,6 +7,16 @@ import {
   ReactNode,
   useEffect,
 } from "react";
+import columns from "@/local-data/columnData";
+
+interface ColumnsTypes {
+  columnLetter: string;
+  columnRows: {
+    column: string;
+    counterOwner: number;
+    rowValue: number;
+  }[];
+}
 
 interface GlobalContextType {
   gameStarted: boolean;
@@ -63,6 +73,8 @@ interface GlobalContextType {
   handlePlayAgain: () => void;
   handleGameRestart: () => void;
   handleTurn: () => void;
+  handleColumnClick: (columnLetter: string) => void;
+  gameColumns: ColumnsTypes[];
 }
 
 const AppContext = createContext<GlobalContextType | undefined>(undefined);
@@ -74,7 +86,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [gamePaused, setGamePaused] = useState(false);
   const [numberOfRounds, setNumberOfRounds] = useState(0);
   const [gameTimer, setGameTimer] = useState(30);
-  // Might have current turn as separate state
+  const [gameColumns, setGameColumns] = useState<ColumnsTypes[]>(columns);
   const [currentPlayer, setCurrentPlayer] = useState({
     playerId: 1,
     isCurrentTurn: true,
@@ -85,7 +97,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     isCurrentTurn: boolean;
     score: number;
   } | null>(null);
-  //
   const [playerInfo, setPlayerInfo] = useState({
     player1: {
       playerId: 1,
@@ -98,9 +109,32 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       score: 0,
     },
   });
-  //
+  //***************************************************//
   const handleGameTimer = () => {
     setGameTimer(gameTimer - 1);
+  };
+  //
+  const handleColumnClick = (columnLetter: string) => {
+    setGameColumns((previousValues) => {
+      const newColumns = previousValues.map((col) => {
+        if (col.columnLetter === columnLetter) {
+          return {
+            ...col,
+            columnRows: [
+              ...col.columnRows,
+              {
+                column: columnLetter,
+                counterOwner: currentPlayer.playerId,
+                rowValue: col.columnRows.length + 1,
+              },
+            ],
+          };
+        }
+        return col;
+      });
+      return newColumns;
+    });
+    handleTurn();
   };
   //
   const handleTurnSwitch = () => {
@@ -170,6 +204,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setGameTimer(30);
     setNumberOfRounds(0);
     setRoundWinner(null);
+    setGameColumns(columns)
     setPlayerInfo({
       player1: {
         playerId: 1,
@@ -271,7 +306,9 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         roundWinner,
         handlePlayAgain,
         handleGameRestart,
-        handleTurn
+        handleTurn,
+        handleColumnClick,
+        gameColumns,
       }}
     >
       {children}

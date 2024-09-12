@@ -27,31 +27,7 @@ interface ColumnsTypes {
 
 const GameGrid = () => {
   // const [counterOwnerId, setCounterOwnerId] = useState<number | null>(null);
-  const { currentPlayer, handleTurn } = useGlobalHook();
-  const [gameColumns, setGameColumns] = useState<ColumnsTypes[]>(columns);
-  //
-  const handleColumnClick = (columnLetter: string) => {
-    setGameColumns((previousValues) => {
-      const newColumns = previousValues.map((col) => {
-        if (col.columnLetter === columnLetter) {
-          return {
-            ...col,
-            columnRows: [
-              ...col.columnRows,
-              {
-                column: columnLetter,
-                counterOwner: currentPlayer.playerId,
-                rowValue: col.columnRows.length + 1,
-              },
-            ],
-          };
-        }
-        return col;
-      });
-      return newColumns;
-    });
-    handleTurn()
-  };
+  const { currentPlayer, handleTurn, handleColumnClick, gameColumns } = useGlobalHook();
   //
   return (
     <section className="w-full max-w-[632px] mx-auto col-start-1 col-end-3 flex flex-col items-center justify-center desktop:col-start-3 desktop:col-end-4 desktop:row-start-2 desktop:row-end-4">
