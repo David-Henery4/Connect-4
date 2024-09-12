@@ -6,30 +6,26 @@ import {
 import { useState } from "react";
 import useGlobalHook from "@/context/useGlobalHook";
 
-const Counter = ({ counterCol }: {counterCol: string}) => {
-  const { currentPlayer } = useGlobalHook();
-  const [isClicked, setIsClicked] = useState(false);
-  const [counterOwnerId, setCounterOwnerId] = useState<number | null>(null);
+const Counter = ({
+  column,
+  counterOwner,
+  rowValue,
+}: {
+  column: string;
+  counterOwner: number;
+  rowValue: number;
+}) => {
+  // const { currentPlayer } = useGlobalHook();
+  // const [counterOwnerId, setCounterOwnerId] = useState<number | null>(null);
+  // const [isClicked, setIsClicked] = useState(false);
+
   //
   return (
-    <div
-      className="w-full h-full relative"
-      onClick={() => {
-        if (!isClicked) {
-          setCounterOwnerId(currentPlayer.playerId);
-        }
-        setIsClicked(true);
-        console.log("counter row: ", counterCol);
-      }}
-    >
-      {isClicked && (
-        <>
-          {counterOwnerId === 1 ? (
-            <CounterRedLargeIcon className="w-full h-full" />
-          ) : (
-            <CounterYellowLargeIcon className="w-full h-full" />
-          )}
-        </>
+    <div className="w-full h-full relative">
+      {counterOwner === 1 ? (
+        <CounterRedLargeIcon className="w-full h-full" />
+      ) : (
+        <CounterYellowLargeIcon className="w-full h-full" />
       )}
     </div>
   );

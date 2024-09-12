@@ -3,6 +3,10 @@ import {
   BoardLayerBlackSmallIcon,
   BoardLayerWhiteLargeIcon,
   BoardLayerWhiteSmallIcon,
+  MarkerYellowBgIcon,
+  MarkerRedBgIcon,
+  MarkerRedIcon,
+  MarkerYellowIcon,
 } from "../../../../public/assets/images";
 import Timer from "./timer/Timer";
 import * as counterData from "@/local-data/counterData";
@@ -10,14 +14,43 @@ import Counter from "./counters/Counter";
 // import * as columnData from "@/local-data/columnData";
 import { useState } from "react";
 import columns from "@/local-data/columnData";
+import useGlobalHook from "@/context/useGlobalHook";
+
+interface ColumnsTypes {
+  columnLetter: string;
+  columnRows: {
+    column: string;
+    counterOwner: number;
+    rowValue: number;
+  }[];
+}
 
 const GameGrid = () => {
-  const [gameColumns, setGameColumns] = useState(columns);
-  //
-  const gridColumns = [...Object.values(counterData)];
+  // const [counterOwnerId, setCounterOwnerId] = useState<number | null>(null);
+  const { currentPlayer, handleTurn } = useGlobalHook();
+  const [gameColumns, setGameColumns] = useState<ColumnsTypes[]>(columns);
   //
   const handleColumnClick = (columnLetter: string) => {
-    console.log(columnLetter)
+    setGameColumns((previousValues) => {
+      const newColumns = previousValues.map((col) => {
+        if (col.columnLetter === columnLetter) {
+          return {
+            ...col,
+            columnRows: [
+              ...col.columnRows,
+              {
+                column: columnLetter,
+                counterOwner: currentPlayer.playerId,
+                rowValue: col.columnRows.length + 1,
+              },
+            ],
+          };
+        }
+        return col;
+      });
+      return newColumns;
+    });
+    handleTurn()
   };
   //
   return (
@@ -29,17 +62,21 @@ const GameGrid = () => {
             return (
               <div
                 key={col.columnLetter}
-                className="flex flex-col justify-end items-center"
+                className="relative group grid grid-rows-mainGameCounterGrid rotate-180 hover:cursor-pointer"
                 onClick={() => {
-                  handleColumnClick(col.columnLetter)
+                  if (col.columnRows.length >= 6) return;
+                  handleColumnClick(col.columnLetter);
                 }}
               >
+                <div className="absolute -bottom-12 left-1/2 rotate-180 -translate-x-1/2 w-[38px] h-9 z-50 hidden group-hover:block">
+                  {currentPlayer.playerId === 1 ? (
+                    <MarkerRedIcon className="w-full h-full" />
+                  ) : (
+                    <MarkerYellowIcon className="w-full h-full" />
+                  )}
+                </div>
                 {col.columnRows?.map((rowItem, i) => {
-                  console.log(rowItem);
-                  if (rowItem !== undefined) {
-                    return <Counter key={i} counterCol={rowItem} />;
-                  }
-                  return null;
+                  return <Counter key={i} {...rowItem} />;
                 })}
               </div>
             );
@@ -66,28 +103,3 @@ const GameGrid = () => {
 
 export default GameGrid;
 
-{
-  /* <div className="w-full h-full absolute top-0 left-0 grid grid-cols-mainGameCounterGrid grid-rows-mainGameCounterGrid grid-flow-col gap-x-4 z-10 pt-[2%] px-[2.7%] pb-[8.5%]">
-  {counterData.colA.map((counter) => {
-    return <Counter key={counter.id} counterCol={counter.col} />;
-  })}
-  {counterData.colB.map((counter) => {
-    return <Counter key={counter.id} counterCol={counter.col} />;
-  })}
-  {counterData.colC.map((counter) => {
-    return <Counter key={counter.id} counterCol={counter.col} />;
-  })}
-  {counterData.colD.map((counter) => {
-    return <Counter key={counter.id} counterCol={counter.col} />;
-  })}
-  {counterData.colE.map((counter) => {
-    return <Counter key={counter.id} counterCol={counter.col} />;
-  })}
-  {counterData.colF.map((counter) => {
-    return <Counter key={counter.id} counterCol={counter.col} />;
-  })}
-  {counterData.colG.map((counter) => {
-    return <Counter key={counter.id} counterCol={counter.col} />;
-  })}
-</div>; */
-}

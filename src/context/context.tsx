@@ -62,6 +62,7 @@ interface GlobalContextType {
   } | null;
   handlePlayAgain: () => void;
   handleGameRestart: () => void;
+  handleTurn: () => void;
 }
 
 const AppContext = createContext<GlobalContextType | undefined>(undefined);
@@ -117,6 +118,24 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     });
   };
   //
+  const handleTurn = () => {
+    handleTurnSwitch();
+    setGameTimer(30);
+    if (playerInfo.player1.isCurrentTurn) {
+      setCurrentPlayer({
+        playerId: 2,
+        isCurrentTurn: true,
+        score: playerInfo.player2.score,
+      });
+    } else {
+      setCurrentPlayer({
+        playerId: 1,
+        isCurrentTurn: true,
+        score: playerInfo.player1.score,
+      });
+    }
+  };
+  //
   const handleScoreUpdate = (player: "player1" | "player2") => {
     setPlayerInfo((previousPlayersInfo) => {
       return {
@@ -129,18 +148,21 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     });
   };
   //
-  const handleWin = () => {
-    handleTurnSwitch();
-  };
-  //
-  // const handlePause = () => {
-  //   setGamePaused(!gamePaused);
+  // const handleWin = () => {
+  //   handleTurnSwitch();
   // };
   //
   const handleGameRestart = () => {
     setHasRoundStarted(true);
     //
-    handleRoundReset()
+    handleRoundReset();
+  };
+  //
+  const handleQuit = () => {
+    setGameStarted(false);
+    setHasRoundStarted(false);
+    //
+    handleRoundReset();
   };
   //
   const handleRoundReset = () => {
@@ -165,13 +187,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       isCurrentTurn: true,
       score: 0,
     });
-  };
-  //
-  const handleQuit = () => {
-    setGameStarted(false);
-    setHasRoundStarted(false);
-    //
-    handleRoundReset()
   };
   //
   const timedOutRound = () => {
@@ -256,6 +271,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         roundWinner,
         handlePlayAgain,
         handleGameRestart,
+        handleTurn
       }}
     >
       {children}
