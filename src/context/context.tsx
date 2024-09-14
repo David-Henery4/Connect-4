@@ -9,13 +9,16 @@ import {
 } from "react";
 import columns from "@/local-data/columnData";
 
+interface ColumnRowTypes {
+  column: string;
+  counterOwner: number;
+  rowValue: number;
+  columnValue: number;
+}
+
 interface ColumnsTypes {
   columnLetter: string;
-  columnRows: {
-    column: string;
-    counterOwner: number;
-    rowValue: number;
-  }[];
+  columnRows: ColumnRowTypes[];
 }
 
 interface GlobalContextType {
@@ -80,7 +83,6 @@ interface GlobalContextType {
 const AppContext = createContext<GlobalContextType | undefined>(undefined);
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
-  // "gameStarted" will only be used to start the initial game and navigate from main menu to game screen
   const [gameStarted, setGameStarted] = useState(false);
   const [hasRoundStarted, setHasRoundStarted] = useState(false);
   const [gamePaused, setGamePaused] = useState(false);
@@ -116,7 +118,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   //
   const handleColumnClick = (columnLetter: string) => {
     setGameColumns((previousValues) => {
-      const newColumns = previousValues.map((col) => {
+      const newColumns = previousValues.map((col, i) => {
         if (col.columnLetter === columnLetter) {
           return {
             ...col,
@@ -126,6 +128,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
                 column: columnLetter,
                 counterOwner: currentPlayer.playerId,
                 rowValue: col.columnRows.length + 1,
+                columnValue: i + 1,
               },
             ],
           };
@@ -182,10 +185,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     });
   };
   //
-  // const handleWin = () => {
-  //   handleTurnSwitch();
-  // };
-  //
   const handleGameRestart = () => {
     setHasRoundStarted(true);
     //
@@ -204,7 +203,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setGameTimer(30);
     setNumberOfRounds(0);
     setRoundWinner(null);
-    setGameColumns(columns)
+    setGameColumns(columns);
     setPlayerInfo({
       player1: {
         playerId: 1,
@@ -257,12 +256,109 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         score: playerInfo.player1.score,
       });
     }
+    setGameColumns(columns);
     setNumberOfRounds(numberOfRounds + 1);
     setHasRoundStarted(true);
     handleTurnSwitch();
     setGameTimer(30);
     setRoundWinner(null);
   };
+  //
+  const isConsecutive = (values: number[]): boolean => {
+    if (values.length < 4) return false;
+    values.sort((a, b) => a - b);
+    //
+    let count = 1;
+    //
+    for (let index = 1; index < values.length; index++) {
+      //
+      if (values[index] === values[index - 1] + 1) {
+        count++;
+        if (count === 4) return true;
+      } else {
+        count = 1;
+      }
+    }
+    //
+    return false;
+  };
+  //
+  const handleCheckWin = () => {
+    let allPlacedCounters: ColumnRowTypes[] = [];
+    //
+    let playerOneCounters: ColumnRowTypes[] = [];
+    let playerTwoCounters: ColumnRowTypes[] = [];
+    //
+    gameColumns.map((col) => {
+      allPlacedCounters.push(...col.columnRows);
+    });
+
+    allPlacedCounters.map((counterValue) => {
+      counterValue?.counterOwner === 1
+        ? playerOneCounters.push(counterValue)
+        : playerTwoCounters.push(counterValue);
+    });
+    //**************************************//
+    // Group by rowValue for horizontal checks
+    const rowsMap = new Map<number, number[]>();
+    playerOneCounters.forEach(({ rowValue, columnValue }) => {
+      if (!rowsMap.has(rowValue)) {
+        rowsMap.set(rowValue, []);
+      }
+      rowsMap.get(rowValue)!.push(columnValue);
+    });
+    // Check horizontal win
+    for (const columns of rowsMap.values()) {
+      if (isConsecutive(columns)) return true;
+    }
+    //**************************************//
+    // Group by columnValue for vertical checks
+    const columnsMap = new Map<number, number[]>();
+    playerOneCounters.forEach(({ rowValue, columnValue }) => {
+      if (!columnsMap.has(columnValue)) {
+        columnsMap.set(columnValue, []);
+      }
+      columnsMap.get(columnValue)!.push(rowValue);
+    });
+    // Check vertical win
+    for (const rows of columnsMap.values()) {
+      if (isConsecutive(rows)) return true;
+    }
+    //**************************************//
+    // Check diagonals
+    const diagonals1 = new Map<number, number[]>(); // bottom-left to top-right
+    const diagonals2 = new Map<number, number[]>(); // bottom-right to top-left
+
+    playerOneCounters.forEach(({ rowValue, columnValue }) => {
+      const diag1Key = rowValue - columnValue;
+      const diag2Key = rowValue + columnValue;
+
+      if (!diagonals1.has(diag1Key)) {
+        diagonals1.set(diag1Key, []);
+      }
+      diagonals1.get(diag1Key)!.push(rowValue);
+
+      if (!diagonals2.has(diag2Key)) {
+        diagonals2.set(diag2Key, []);
+      }
+      diagonals2.get(diag2Key)!.push(rowValue);
+    });
+
+    // Check diagonal wins
+    for (const diagonal of diagonals1.values()) {
+      if (isConsecutive(diagonal)) return true;
+    }
+    for (const diagonal of diagonals2.values()) {
+      if (isConsecutive(diagonal)) return true;
+    }
+
+    return false;
+    //**************************************//
+  };
+  //
+  useEffect(() => {
+    handleCheckWin();
+  }, [gameColumns]);
   //
   useEffect(() => {
     // Each player has 30 seconds to take their turn.
