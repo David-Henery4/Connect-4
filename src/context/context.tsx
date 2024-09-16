@@ -298,23 +298,74 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         ? playerOneCounters.push(counterValue)
         : playerTwoCounters.push(counterValue);
     });
-    //**************************************//
-    // Group by rowValue for horizontal checks
-    const rowsMap = new Map<number, number[]>();
-    playerOneCounters.forEach(({ rowValue, columnValue }) => {
-      if (!rowsMap.has(rowValue)) {
-        rowsMap.set(rowValue, []);
+
+    // Check Player One
+    const playerOneVertCheck = handleVerticalWinCheck(playerOneCounters);
+    const playerOneHoriCheck = handleHorizontalWinCheck(playerOneCounters);
+    const playerOneDiagCheck = handleDiagonalWinCheck(playerOneCounters);
+
+    // Check Player Two
+    const playerTwoVertCheck = handleVerticalWinCheck(playerTwoCounters);
+    const playerTwoHoriCheck = handleHorizontalWinCheck(playerTwoCounters);
+    const playerTwoDiagCheck = handleDiagonalWinCheck(playerTwoCounters);
+
+    if (playerOneDiagCheck || playerOneHoriCheck || playerOneVertCheck) {
+      handleScoreUpdate("player1");
+      setHasRoundStarted(false);
+      setRoundWinner({
+        isCurrentTurn: true,
+        playerId: 1,
+        score: playerInfo.player1.score, // might have to add "+ 1"
+      });
+      if (playerInfo.player1.isCurrentTurn) {
+        setCurrentPlayer({
+          playerId: 2,
+          isCurrentTurn: true,
+          score: playerInfo.player2.score,
+        });
+      } else {
+        setCurrentPlayer({
+          playerId: 1,
+          isCurrentTurn: true,
+          score: playerInfo.player1.score,
+        });
       }
-      rowsMap.get(rowValue)!.push(columnValue);
-    });
-    // Check horizontal win
-    for (const columns of rowsMap.values()) {
-      if (isConsecutive(columns)) return true;
+      handleTurnSwitch()
+      return;
     }
-    //**************************************//
+    if (playerTwoDiagCheck || playerTwoHoriCheck || playerTwoVertCheck) {
+      handleScoreUpdate("player2");
+      setHasRoundStarted(false);
+      setRoundWinner({
+        isCurrentTurn: true,
+        playerId: 2,
+        score: playerInfo.player2.score, // might have to add "+ 1"
+      });
+      if (playerInfo.player1.isCurrentTurn) {
+        setCurrentPlayer({
+          playerId: 2,
+          isCurrentTurn: true,
+          score: playerInfo.player2.score,
+        });
+      } else {
+        setCurrentPlayer({
+          playerId: 1,
+          isCurrentTurn: true,
+          score: playerInfo.player1.score,
+        });
+      }
+      handleTurnSwitch()
+      return;
+    }
+    setRoundWinner(null);
+  };
+  //
+  const handleVerticalWinCheck = (
+    playerCounterList: ColumnRowTypes[]
+  ): boolean => {
     // Group by columnValue for vertical checks
     const columnsMap = new Map<number, number[]>();
-    playerOneCounters.forEach(({ rowValue, columnValue }) => {
+    playerCounterList.forEach(({ rowValue, columnValue }) => {
       if (!columnsMap.has(columnValue)) {
         columnsMap.set(columnValue, []);
       }
@@ -324,12 +375,35 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     for (const rows of columnsMap.values()) {
       if (isConsecutive(rows)) return true;
     }
-    //**************************************//
+    return false;
+  };
+  //
+  const handleHorizontalWinCheck = (
+    playerCounterList: ColumnRowTypes[]
+  ): boolean => {
+    // Group by rowValue for horizontal checks
+    const rowsMap = new Map<number, number[]>();
+    playerCounterList.forEach(({ rowValue, columnValue }) => {
+      if (!rowsMap.has(rowValue)) {
+        rowsMap.set(rowValue, []);
+      }
+      rowsMap.get(rowValue)!.push(columnValue);
+    });
+    // Check horizontal win
+    for (const columns of rowsMap.values()) {
+      if (isConsecutive(columns)) return true;
+    }
+    return false;
+  };
+  //
+  const handleDiagonalWinCheck = (
+    playerCounterList: ColumnRowTypes[]
+  ): boolean => {
     // Check diagonals
     const diagonals1 = new Map<number, number[]>(); // bottom-left to top-right
     const diagonals2 = new Map<number, number[]>(); // bottom-right to top-left
 
-    playerOneCounters.forEach(({ rowValue, columnValue }) => {
+    playerCounterList.forEach(({ rowValue, columnValue }) => {
       const diag1Key = rowValue - columnValue;
       const diag2Key = rowValue + columnValue;
 
@@ -351,9 +425,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     for (const diagonal of diagonals2.values()) {
       if (isConsecutive(diagonal)) return true;
     }
-
     return false;
-    //**************************************//
   };
   //
   useEffect(() => {
