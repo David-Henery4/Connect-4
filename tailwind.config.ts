@@ -33,6 +33,11 @@ const config: Config = {
       pink: "#FD6687",
       yellow: "#FFCE67",
     },
+    keyframes: {
+      counterPlacement: {
+        
+      },
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

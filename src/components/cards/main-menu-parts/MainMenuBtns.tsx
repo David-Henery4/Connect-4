@@ -10,7 +10,7 @@ const MainMenuBtns = () => {
     <div className="flex flex-col gap-4 w-full">
       <Button variant="primary" onClick={() => setGameStarted(true)}>
         <Heading variant="medium" className="flex-1">
-          PLAY VS PLAYER
+          PLAYER VS PLAYER
         </Heading>
         <PlayerVsPlayerIcon />
       </Button>

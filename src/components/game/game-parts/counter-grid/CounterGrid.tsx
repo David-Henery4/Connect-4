@@ -14,7 +14,7 @@ const CounterGrid = () => {
     } = useGlobalHook();
   //
   return (
-    <div className="w-full h-full absolute top-0 left-0 z-10 pt-[2%] px-[2.7%] pb-[8.5%] grid grid-cols-mainGameCounterGrid gap-4">
+    <div className="w-full h-full absolute top-0 left-0 z-10 pt-[2%] px-[2%] pb-[9.5%] grid grid-cols-mainGameCounterGrid gap-2 tablet:gap-4 tablet:pb-[8.5%] tablet:px-[2.7%]">
       {gameColumns.map((col) => {
         return (
           <div
@@ -34,7 +34,7 @@ const CounterGrid = () => {
               )}
             </div>
             {col.columnRows?.map((rowItem, i) => {
-              return <Counter key={i} {...rowItem} />;
+              return <Counter key={i} {...rowItem} index={i} />;
             })}
           </div>
         );
