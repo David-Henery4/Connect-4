@@ -1,3 +1,4 @@
+import confetti from "canvas-confetti";
 import {
   MarkerRedBgIcon,
   MarkerYellowBgIcon,
@@ -6,28 +7,87 @@ import { Heading } from "@/components/reusable/text";
 import Button from "@/components/reusable/Button";
 import useGlobalHook from "@/context/useGlobalHook";
 import Navbtn from "../nav-btn/Navbtn";
+import { useEffect, useState } from "react";
+
+interface ConfettiOptions {
+  spread: number;
+  startVelocity?: number;
+  decay?: number;
+  scalar?: number;
+}
 
 const Timer = () => {
-  const { gameTimer, currentPlayer, hasRoundStarted, roundWinner, handlePlayAgain } = useGlobalHook();
+  const [count, setCount] = useState(600)
+  const [defaults, setDefaults] = useState({
+    origin: {
+      y: 0.7,
+    },
+  });
+  //
+  const {
+    gameTimer,
+    currentPlayer,
+    hasRoundStarted,
+    roundWinner,
+    handlePlayAgain,
+  } = useGlobalHook();
+  //
+  const handleConfetti = (particleRatio: number, opts: ConfettiOptions) => {
+    confetti({
+      ...defaults,
+      ...opts,
+      particleCount: Math.floor(count * particleRatio),
+    });
+  };
+  //
+  useEffect(() => {
+    if (!hasRoundStarted && roundWinner) {
+      handleConfetti(0.25, {
+        spread: 26,
+        startVelocity: 55,
+      });
+      handleConfetti(0.2, {
+        spread: 60,
+      });
+      handleConfetti(0.35, {
+        spread: 100,
+        decay: 0.91,
+        scalar: 0.8,
+      });
+      handleConfetti(0.1, {
+        spread: 120,
+        startVelocity: 25,
+        decay: 0.92,
+        scalar: 1.2,
+      });
+      handleConfetti(0.1, {
+        spread: 120,
+        startVelocity: 45,
+      });
+    }
+  }, [hasRoundStarted, roundWinner]);
   //
   return (
     <>
       {!hasRoundStarted && roundWinner ? (
-        <div className="z-10 p-5 flex flex-col justify-center items-center mt-[-27px] relative w-[60vw] max-w-[285px] bg-white text-black rounded-[20px] border-[3px] border-b-[12px] border-black">
-          <Heading
-            variant="xsmall"
-            className="leading-none text-scoreSmallHeading"
-          >
-            {roundWinner.playerId === 1 ? "PLAYER 1" : "PLAYER 2"}
-          </Heading>
-          <Heading
-            variant="large"
-            className="leading-none text-scoreLargeHeading mt-2 mb-3"
-          >
-            WINS
-          </Heading>
-          <Navbtn btnType="play again" onClick={handlePlayAgain} />
-        </div>
+        <>
+          
+          <div className="z-10 p-5 flex flex-col justify-center items-center mt-[-27px] relative w-[60vw] max-w-[285px] bg-white text-black rounded-[20px] border-[3px] border-b-[12px] border-black">
+            <Heading
+              variant="xsmall"
+              className="leading-none text-scoreSmallHeading"
+            >
+              {roundWinner.playerId === 1 ? "PLAYER 1" : "PLAYER 2"}
+            </Heading>
+            <Heading
+              variant="large"
+              className="leading-none text-scoreLargeHeading mt-2 mb-3"
+            >
+              WINS
+            </Heading>
+            <Navbtn btnType="play again" onClick={handlePlayAgain} />
+          </div>
+        </>
       ) : (
         <div className="z-10 mt-[-27px] relative w-[40vw] max-w-[191px] max-h-[150px] text-white">
           {currentPlayer.playerId === 1 ? (
