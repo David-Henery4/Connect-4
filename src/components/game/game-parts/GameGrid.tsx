@@ -21,7 +21,6 @@ const GameGrid = () => {
         </div>
         <div
           className="w-full relative z-10 pointer-events-none"
-          onClick={() => console.log("clicked: grid")}
         >
           <BoardLayerWhiteSmallIcon className="w-full h-full tablet:hidden" />
           <BoardLayerWhiteLargeIcon className="w-full h-full hidden tablet:block" />

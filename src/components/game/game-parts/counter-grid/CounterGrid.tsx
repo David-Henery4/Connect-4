@@ -4,8 +4,11 @@ import {
 } from "../../../../../public/assets/images";
 import useGlobalHook from "@/context/useGlobalHook";
 import Counter from "../counters/Counter";
+import useWithSound from "@/hook/useWithSound";
+import popSound from "../../../../../public/assets/sounds/pop.mp3"
 
 const CounterGrid = () => {
+  const {handlePlaySound} = useWithSound(popSound)
   const { 
     gameColumns, 
     handleColumnClick, 
@@ -24,6 +27,7 @@ const CounterGrid = () => {
               if (!hasRoundStarted) return;
               if (col.columnRows.length >= 6) return;
               handleColumnClick(col.columnLetter);
+              handlePlaySound()
             }}
           >
             <div className="absolute -bottom-12 left-1/2 rotate-180 -translate-x-1/2 w-[38px] h-9 z-50 hidden group-hover:block">

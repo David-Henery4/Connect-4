@@ -5,12 +5,10 @@ import {
   CounterYellowLargeIcon,
 } from "../../../../../public/assets/images";
 import { useEffect, useState } from "react";
-import useGlobalHook from "@/context/useGlobalHook";
+
 
 const Counter = ({
-  column,
   counterOwner,
-  rowValue,
   index,
 }: {
   column: string;
@@ -23,9 +21,6 @@ const Counter = ({
   );
   const [opacity, setOpacity] = useState(0.9)
   const [scale, setScale] = useState(0.9)
-  // console.log(`${600 - index * 100}%`);
-  // // const initialCounterPos = `translate-y-[${600 - index * 100}%]`;
-  // const initialCounterPosInline = `translateY(${600 - index * 100}%)`;
   //
   useEffect(() => {
     //
