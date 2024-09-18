@@ -8,7 +8,8 @@ import useGlobalHook from "@/context/useGlobalHook";
 import Navbtn from "../nav-btn/Navbtn";
 import { useEffect, useState } from "react";
 import useWithSound from "@/hook/useWithSound";
-import winSound from "../../../../../public/assets/sounds/success.mp3"
+import winSound from "/public/assets/sounds/success.mp3"
+// import winSound from "../../../../../public/assets/sounds/success.mp3"
 
 interface ConfettiOptions {
   spread: number;
