@@ -7,8 +7,8 @@ import { Heading } from "@/components/reusable/text";
 import useGlobalHook from "@/context/useGlobalHook";
 import Navbtn from "../nav-btn/Navbtn";
 import { useEffect, useState } from "react";
-import useWithSound from "@/hook/useWithSound";
-import winSound from "/public/assets/sounds/success.mp3"
+// import useWithSound from "@/hook/useWithSound";
+// import winSound from "/public/assets/sounds/success.mp3"
 // import winSound from "../../../../../public/assets/sounds/success.mp3"
 
 interface ConfettiOptions {
@@ -19,7 +19,7 @@ interface ConfettiOptions {
 }
 
 const Timer = () => {
-  const {handlePlaySound} = useWithSound(winSound)
+  // const {handlePlaySound} = useWithSound(winSound)
   const [count, setCount] = useState(600)
   const [defaults, setDefaults] = useState({
     origin: {
@@ -45,7 +45,7 @@ const Timer = () => {
   //
   useEffect(() => {
     if (!hasRoundStarted && roundWinner) {
-      handlePlaySound()
+      // handlePlaySound()
       handleConfetti(0.25, {
         spread: 26,
         startVelocity: 55,
