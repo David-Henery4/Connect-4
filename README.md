@@ -35,7 +35,8 @@ Users are able to:
 (To be added)
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+
+- Live Site URL: [https://connect-4-444.vercel.app](https://connect-4-444.vercel.app/)
 
 ## My process
 
@@ -99,6 +100,8 @@ Here is a small example of how I used them to help detect four in a row:
 - [NextJS Docs](https://nextjs.org/docs) - NextJS Documentation
 
 - [Confetti Module](https://github.com/catdad/canvas-confetti) - Good confetti module/library for a confetti effect using the canvas.
+
+- [This Stack overflow solution](https://stackoverflow.com/questions/77962571/resolving-module-parse-failed-error-importing-mp3s-in-nextjs14-ts) - Helped me solve a problem I was having using the mp3 files for sound effects.
 
 ## Author
 
