@@ -20,11 +20,11 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "target": "ES2022"
+    "target": "ES2015"
   },
   "include": [
     "next-env.d.ts",
-    "new-types.d.ts",
+    // "new-types.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
