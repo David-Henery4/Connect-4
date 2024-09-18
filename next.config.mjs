@@ -8,16 +8,15 @@ const nextConfig = {
         use: ["@svgr/webpack"],
       },
       {
-        test: /\.(mp3)$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            publicPath: "/_next/static/sounds/",
-            outputPath: "static/sounds/",
-            name: "[name].[ext]",
-            esModule: false,
+        test: /\.(ogg|mp3|wav|mpe?g)$/i,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              name: "[name]-[hash].[ext]",
+            },
           },
-        },
+        ],
       }
     );
 
