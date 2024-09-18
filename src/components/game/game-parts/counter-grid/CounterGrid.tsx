@@ -5,7 +5,7 @@ import {
 import useGlobalHook from "@/context/useGlobalHook";
 import Counter from "../counters/Counter";
 import useWithSound from "@/hook/useWithSound";
-import popSound from "/public/assets/sounds/pop.mp3"
+import popSound from "/assets/sounds/pop.mp3"
 // import popSound from "../../../../../public/assets/sounds/pop.mp3"
 
 const CounterGrid = () => {
